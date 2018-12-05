@@ -1,5 +1,7 @@
 (ns hexxagon-cljs.hex)
 
+;; https://www.redblobgames.com/grids/hexagons/
+
 
 (defn even-q->cube [cell]
   (let [col (get cell :x)
