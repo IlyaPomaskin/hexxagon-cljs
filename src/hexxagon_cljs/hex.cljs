@@ -3,6 +3,16 @@
 ;; https://www.redblobgames.com/grids/hexagons/
 
 
+(def offset-neighbours
+  [[-1 -1] [0 -1] [1 -1]
+   [-1  0] [0  1] [1  0]])
+
+
+(def non-offset-neighbours
+  [[-1 0] [0 -1] [1 0]
+   [-1 1] [0  1] [1 1]])
+
+
 (defn even-q->cube [cell]
   (let [col (get cell :x)
         row (get cell :y)
@@ -25,16 +35,6 @@
           (Math/abs (- src-y dst-y))
           (Math/abs (- src-z dst-z)))
        2)))
-
-
-(def offset-neighbours
-  [[-1 -1] [0 -1] [1 -1]
-   [-1  0] [0  1] [1  0]])
-
-
-(def non-offset-neighbours
-  [[-1 0] [0 -1] [1 0]
-   [-1 1] [0  1] [1 1]])
 
 
 (defn offset-cell? [cell]

@@ -3,11 +3,16 @@
               [hexxagon-cljs.hex :as hex]))
 
 
-(defn mapv-indexed [func vect]
-  (reduce-kv
-   (fn [acc k v] (conj acc (func k v)))
-   []
-   vect))
+(def default-board
+  ["____B____"
+   "__00000__"
+   "R0000000R"
+   "0000_0000"
+   "000000000"
+   "000_0_000"
+   "B0000000B"
+   "_0000000_"
+   "___0R0___"])
 
 
 (def char->player
@@ -24,25 +29,16 @@
    :owner (char->player char)})
 
 
-(def default-board
-  ["____B____"
-   "__00000__"
-   "R0000000R"
-   "0000_0000"
-   "000000000"
-   "000_0_000"
-   "B0000000B"
-   "_0000000_"
-   "___0R0___"])
-
-
 (defn string->board [board]
-  (mapv-indexed
-   (fn [y line]
-     (mapv-indexed
-      (fn [x char] (create-cell char x y))
-      (filterv #(not= "" %) (string/split line #""))))
-   board))
+  (letfn [(mapv-indexed
+            [func vect]
+            (reduce-kv (fn [acc key value] (conj acc (func key value))) [] vect))]
+    (mapv-indexed
+     (fn [y line]
+       (mapv-indexed
+        (fn [x char] (create-cell char x y))
+        (filterv #(not= "" %) (string/split line #""))))
+     board)))
 
 
 (defn get-initial-state []
