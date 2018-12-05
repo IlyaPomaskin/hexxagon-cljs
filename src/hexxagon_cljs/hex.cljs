@@ -12,16 +12,6 @@
      :y y}))
 
 
-(defn cube->even-q [cell]
-  (let [x (get cell :x)
-        z (get cell :z)
-        y (get cell :y)
-        col x
-        row (+ z (/ (+ x (bit-and x 1)) 2))]
-    {:x col
-     :y row}))
-
-
 (defn distance [src-cell dst-cell]
   (let [{src-x :x
          src-y :y
