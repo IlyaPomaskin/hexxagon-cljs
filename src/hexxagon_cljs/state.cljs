@@ -1,48 +1,10 @@
 (ns hexxagon-cljs.state
-    (:require [clojure.string :as string]
-              [hexxagon-cljs.hex :as hex]))
-
-
-(def default-board
-  ["____B____"
-   "__00000__"
-   "R0000000R"
-   "0000_0000"
-   "000000000"
-   "000_0_000"
-   "B0000000B"
-   "_0000000_"
-   "___0R0___"])
-
-
-(def char->player
-  {"B" :player/blue
-   "R" :player/red
-   "0" :empty})
-
-
-(defn create-cell [char x y]
-  {:x x
-   :y y
-   :selected? false
-   :highlighted? false
-   :owner (char->player char)})
-
-
-(defn string->board [board]
-  (letfn [(mapv-indexed
-            [func vect]
-            (reduce-kv (fn [acc key value] (conj acc (func key value))) [] vect))]
-    (mapv-indexed
-     (fn [y line]
-       (mapv-indexed
-        (fn [x char] (create-cell char x y))
-        (filterv #(not= "" %) (string/split line #""))))
-     board)))
+    (:require [hexxagon-cljs.hex :as hex]
+              [hexxagon-cljs.boards :as boards]))
 
 
 (defn get-initial-state []
-  {:board (string->board default-board)
+  {:board boards/b0
    :turn :player/red
    :winner nil})
 
